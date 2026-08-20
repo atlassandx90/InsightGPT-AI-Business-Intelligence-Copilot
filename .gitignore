@@ -1,0 +1,30 @@
+venv/
+.env
+
+__pycache__/
+*.pyc
+*.pyo
+
+.pytest_cache/
+
+.vscode/
+
+.ipynb_checkpoints/
+
+*.log
+
+.DS_Store
+
+# Build
+build/
+dist/
+
+# Streamlit
+.streamlit/secrets.toml
+
+# OS files
+Thumbs.db
+
+# Python env
+.env.*
+data/
