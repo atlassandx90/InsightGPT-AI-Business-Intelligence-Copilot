@@ -1,3 +1,4 @@
+import os
 import streamlit as st
 import requests
 import pandas as pd
@@ -103,15 +104,21 @@ st.markdown(
 
 # ---------------- API URLs ---------------- #
 
-API_URL = "http://127.0.0.1:8000/kpis"
-MONTHLY_API = "http://127.0.0.1:8000/sales/monthly"
-STATE_API = "http://127.0.0.1:8000/sales/state"
-CATEGORY_API = "http://127.0.0.1:8000/categories/top"
-PAYMENT_API = "http://127.0.0.1:8000/payments/types"
-REVIEW_API = "http://127.0.0.1:8000/reviews/score"
-FORECAST_API = "http://127.0.0.1:8000/forecast/revenue"
-FILTER_API = "http://127.0.0.1:8000/filters"
-INSIGHT_API = "http://127.0.0.1:8000/insights"
+BACKEND_URL = os.getenv(
+    "BACKEND_URL",
+    "http://127.0.0.1:8000"
+).rstrip("/")
+
+API_URL = f"{BACKEND_URL}/kpis"
+MONTHLY_API = f"{BACKEND_URL}/sales/monthly"
+STATE_API = f"{BACKEND_URL}/sales/state"
+CATEGORY_API = f"{BACKEND_URL}/categories/top"
+PAYMENT_API = f"{BACKEND_URL}/payments/types"
+REVIEW_API = f"{BACKEND_URL}/reviews/score"
+FORECAST_API = f"{BACKEND_URL}/forecast/revenue"
+FILTER_API = f"{BACKEND_URL}/filters"
+INSIGHT_API = f"{BACKEND_URL}/insights"
+COPILOT_API = f"{BACKEND_URL}/copilot"
     
 # Load filter values
 
@@ -713,9 +720,9 @@ with st.container(border=True):
                    }
 
                    copilot_response = requests.get(
-                       "http://127.0.0.1:8000/copilot",
-                        params=copilot_params,
-                        timeout=30
+                       COPILOT_API,
+                       params=copilot_params,
+                       timeout=30
                     )
 
                 st.session_state["total_queries"] += 1
