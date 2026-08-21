@@ -104,10 +104,7 @@ st.markdown(
 
 # ---------------- API URLs ---------------- #
 
-BACKEND_URL = os.getenv(
-    "BACKEND_URL",
-    "http://127.0.0.1:8000"
-).rstrip("/")
+BACKEND_URL = "https://insightgpt-ai-business-intelligence.onrender.com"
 
 API_URL = f"{BACKEND_URL}/kpis"
 MONTHLY_API = f"{BACKEND_URL}/sales/monthly"
@@ -118,7 +115,6 @@ REVIEW_API = f"{BACKEND_URL}/reviews/score"
 FORECAST_API = f"{BACKEND_URL}/forecast/revenue"
 FILTER_API = f"{BACKEND_URL}/filters"
 INSIGHT_API = f"{BACKEND_URL}/insights"
-COPILOT_API = f"{BACKEND_URL}/copilot"
     
 # Load filter values
 
