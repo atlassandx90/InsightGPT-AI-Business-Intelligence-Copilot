@@ -716,7 +716,7 @@ with st.container(border=True):
                    }
 
                    copilot_response = requests.get(
-                       COPILOT_API,
+                       f"{BACKEND_URL}/copilot",
                        params=copilot_params,
                        timeout=30
                     )
