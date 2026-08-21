@@ -404,21 +404,11 @@ def _copilot_engine_raw(question: str):
             recommendation = (f"Expand marketing and fulfillment "f"capacity in {top['state']}."),
             chart_metadata=chart_metadata
         )
-    # ======================================================
+        # ======================================================
     # CATEGORY
     # ======================================================
 
     elif intent == "category":
-
-        print("INTENT =", intent)
-
-        data = get_top_categories(
-            state,
-            category,
-            payment,
-        )
-
-        print("CATEGORY DATA =", data)
 
         data = get_top_categories(
             state,
@@ -427,40 +417,93 @@ def _copilot_engine_raw(question: str):
         )
 
         if not data:
-            return "No category revenue data is available."
+            return CopilotResponse(
+                answer="No category revenue data is available.",
+                sql=generated_sql,
+                result=[],
+                insight="No product category revenue data was found.",
+                recommendation="Check the available category data.",
+                chart_metadata=None
+            )
 
-        top = data[0]
-
-        top_revenue = float(top["revenue"])
-
-        total_revenue = sum(
-            float(row["revenue"])
-            for row in data
-        )
-
-        share = (
-            top_revenue / total_revenue
-        ) * 100
+        # Keep top 5 categories
+        top_categories = data[:5]
 
         chart_metadata = {
             "chart_type": "bar",
-            "x": [row["category"] for row in data[:10]],
-            "y": [float(row["revenue"]) for row in data[:10]],
-            "title": "Top Categories"
+            "x": [
+                str(row["category"])
+                .replace("_", " ")
+                .title()
+                for row in top_categories
+            ],
+            "y": [
+                float(row["revenue"])
+                for row in top_categories
+            ],
+            "title": "Top 5 Product Categories by Revenue"
         }
 
-        category_name = (
-            str(top["category"])
+        # Build readable answer
+        category_lines = []
+
+        for index, row in enumerate(top_categories, start=1):
+
+            category_name = (
+                str(row["category"])
+                .replace("_", " ")
+                .title()
+            )
+
+            revenue = float(row["revenue"])
+
+            category_lines.append(
+                f"{index}. {category_name}: ${revenue:,.2f}"
+            )
+
+        answer = (
+            "Top 5 product categories by revenue:\n"
+            + "\n".join(category_lines)
+        )
+
+        total_revenue = sum(
+            float(row["revenue"])
+            for row in top_categories
+        )
+
+        top_revenue = float(
+            top_categories[0]["revenue"]
+        )
+
+        share = (
+            top_revenue / total_revenue * 100
+            if total_revenue > 0
+            else 0
+        )
+
+        top_name = (
+            str(top_categories[0]["category"])
             .replace("_", " ")
             .title()
         )
 
+        insight = (
+            f"{top_name} is the highest-revenue category among "
+            f"the top 5 categories, contributing approximately "
+            f"{share:.1f}% of their combined revenue."
+        )
+
+        recommendation = (
+            f"Protect performance in {top_name} while evaluating "
+            f"the remaining top categories for additional growth opportunities."
+        )
+
         return CopilotResponse(
-            answer=(f"Top product category is {category_name} "f"with revenue ${float(top['revenue']):,.2f}."),
+            answer=answer,
             sql=generated_sql,
-            result=data,
-            insight = (f"{category_name} contributes {share:.1f}% of total category revenue and remains the strongest-performing product segment."),
-            recommendation = (f"Protect market share in {category_name} while investing in emerging categories with growth potential."),
+            result=top_categories,
+            insight=insight,
+            recommendation=recommendation,
             chart_metadata=chart_metadata
         )
 
