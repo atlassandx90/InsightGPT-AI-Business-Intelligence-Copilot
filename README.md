@@ -36,7 +36,7 @@ The main dashboard provides an overview of business performance through KPIs, or
 
 The AI Business Copilot allows users to ask business questions using natural language and receive AI-powered business insights.
 
-![AI Business Copilot](docs/images/ai-business-copilot.png)
+![AI Business Copilot](docs/images/quick%20questions%20and%20answer.png)
 
 ---
 
@@ -44,7 +44,7 @@ The AI Business Copilot allows users to ask business questions using natural lan
 
 InsightGPT provides both the query result and the generated SQL, improving transparency and allowing users to understand how the analytical result was produced.
 
-![Result Data and SQL](docs/images/result-data-and-sql.png)
+![Result Data and SQL](docs/images/result%20data%20and%20sql.png)
 
 ---
 
@@ -52,7 +52,7 @@ InsightGPT provides both the query result and the generated SQL, improving trans
 
 The forecasting module combines historical revenue with future forecast values to provide a forward-looking view of business performance.
 
-![Revenue Forecast](docs/images/revenue-forecast.png)
+![Revenue Forecast](docs/images/revenue%20forecast.png)
 
 ---
 
