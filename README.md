@@ -4,6 +4,8 @@ An AI-powered Business Intelligence Copilot for **SQL analytics, interactive das
 
 InsightGPT combines **Python, FastAPI, Streamlit, PostgreSQL, SQL, Machine Learning, and Google Gemini AI** to help users explore business data and turn natural-language questions into actionable insights.
 
+---
+
 ## Live Demo
 
 ### Dashboard
@@ -17,6 +19,40 @@ https://insightgpt-ai-business-intelligence.onrender.com
 ### API Health Check
 
 https://insightgpt-ai-business-intelligence.onrender.com/health
+
+---
+
+## Dashboard Preview
+
+### Main Business Intelligence Dashboard
+
+The main dashboard provides an overview of business performance through KPIs, order analytics, and monthly revenue trends.
+
+![InsightGPT Main Dashboard](docs/images/Main%20Dashboard.png)
+
+---
+
+### AI Business Copilot
+
+The AI Business Copilot allows users to ask business questions using natural language and receive AI-powered business insights.
+
+![AI Business Copilot](docs/images/ai-business-copilot.png)
+
+---
+
+### Result Data and Generated SQL
+
+InsightGPT provides both the query result and the generated SQL, improving transparency and allowing users to understand how the analytical result was produced.
+
+![Result Data and SQL](docs/images/result-data-and-sql.png)
+
+---
+
+### Revenue Forecast
+
+The forecasting module combines historical revenue with future forecast values to provide a forward-looking view of business performance.
+
+![Revenue Forecast](docs/images/revenue-forecast.png)
 
 ---
 
@@ -55,6 +91,8 @@ The dashboard provides interactive analysis of:
 - Revenue Forecast
 - AI Business Insights
 
+---
+
 ### Interactive Filters
 
 Users can filter the dashboard by:
@@ -64,6 +102,8 @@ Users can filter the dashboard by:
 - Payment Type
 
 The selected filters are passed to the backend APIs and applied to the corresponding analytics.
+
+---
 
 ### AI Business Copilot
 
