@@ -131,9 +131,46 @@ if "copilot_question" not in st.session_state:
     st.session_state["copilot_question"] = ""
 
 try:
-    filter_options = requests.get(FILTER_API).json()
-except Exception:
-    st.error("Could not load filters")
+    filter_response = requests.get(
+        FILTER_API,
+        timeout=30
+    )
+
+    if filter_response.status_code != 200:
+        st.error(
+            f"Filter API returned HTTP {filter_response.status_code}"
+        )
+        st.code(filter_response.text[:2000])
+        st.stop()
+
+    filter_options = filter_response.json()
+
+    # Validate expected response structure
+    required_keys = ["states", "categories", "payment_types"]
+
+    missing_keys = [
+        key for key in required_keys
+        if key not in filter_options
+    ]
+
+    if missing_keys:
+        st.error(
+            f"Filter API response is missing: {missing_keys}"
+        )
+        st.json(filter_options)
+        st.stop()
+
+except requests.exceptions.Timeout:
+    st.error("Filter API request timed out after 30 seconds.")
+    st.stop()
+
+except requests.exceptions.RequestException as e:
+    st.error(f"Could not connect to Filter API: {e}")
+    st.stop()
+
+except ValueError:
+    st.error("Filter API returned invalid JSON.")
+    st.code(filter_response.text[:2000])
     st.stop()
 
 selected_state = st.sidebar.selectbox(
